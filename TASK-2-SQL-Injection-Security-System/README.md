@@ -1,21 +1,47 @@
 🛡️ Detecting Data Leaks Using SQL Injection — Cloud Security System
 
-A cloud-hosted, double-layer security system that detects and prevents SQL injection attacks, encrypts sensitive data using AES-256, and provides real-time threat monitoring — deployable on AWS with zero heavy system requirements.
+A cloud-hosted double-layer security system designed to detect, prevent, and monitor SQL Injection attacks in real time.
+The system protects sensitive user data using AES-256 encryption and can be deployed on the cloud (AWS) without heavy system requirements.
 
+🚨 Problem
 
-SQL Injection is the #1 web attack vector (OWASP Top 10). Attackers type malicious SQL code into login forms to:
+SQL Injection is one of the most common and dangerous web attacks (OWASP Top 10).
+Attackers insert malicious SQL queries into input fields such as login forms to:
 
-Bypass authentication (' OR '1'='1)
-Dump entire databases
-Delete or modify records
+🔓 Bypass authentication (' OR '1'='1)
 
-This project builds a cloud system that:
+📂 Access or dump entire databases
 
-Detects SQL injection patterns in real-time
-Blocks malicious requests before they reach the database
-Encrypts stored data with AES-256 so even if data is stolen, it's unreadable
-Logs all attack attempts with attacker IP, timestamp, and payload
+❌ Delete or modify sensitive records
 
+Without proper protection, these attacks can cause serious data leaks and security breaches.
+
+💡 Solution
+
+This project implements a Cloud-Based Security System that protects applications from SQL injection and data leaks.
+
+🔐 Key Features
+
+🛡 SQL Injection Detection
+Identifies suspicious SQL patterns in real time.
+
+🚫 Attack Prevention
+Blocks malicious requests before they reach the database.
+
+🔑 AES-256 Encryption
+Sensitive user data is encrypted, making stolen data unreadable.
+
+🌐 Cloud Deployment
+Can be hosted on AWS with minimal system requirements.
+
+📊 Attack Monitoring & Logs
+Records all attack attempts including:
+
+Attacker IP address
+
+Timestamp
+
+Malicious payload
 
 ## Architecture
 
