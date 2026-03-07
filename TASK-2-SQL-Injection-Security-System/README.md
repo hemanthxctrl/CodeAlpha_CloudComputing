@@ -3,6 +3,20 @@
 A cloud-hosted, double-layer security system that detects and prevents SQL injection attacks, encrypts sensitive data using AES-256, and provides real-time threat monitoring — deployable on AWS with zero heavy system requirements.
 
 
+SQL Injection is the #1 web attack vector (OWASP Top 10). Attackers type malicious SQL code into login forms to:
+
+Bypass authentication (' OR '1'='1)
+Dump entire databases
+Delete or modify records
+
+This project builds a cloud system that:
+
+Detects SQL injection patterns in real-time
+Blocks malicious requests before they reach the database
+Encrypts stored data with AES-256 so even if data is stolen, it's unreadable
+Logs all attack attempts with attacker IP, timestamp, and payload
+
+
 ## Architecture
 
 🌐 Internet  
