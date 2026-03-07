@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureAuth — SQL Injection Detection System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0e1a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0,100,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,255,150,0.05) 0%, transparent 40%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo .shield {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .logo h1 {
+            color: #00ff88;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo p {
+            color: #4a5568;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+            color: #00ff88;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            background: #0a0e1a;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: transparent;
+            color: #6b7280;
+        }
+
+        .tab.active {
+            background: #1f2937;
+            color: #00ff88;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #0a0e1a;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            color: #f9fafb;
+            font-size: 15px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 0 3px rgba(0,255,136,0.1);
+        }
+
+        input.danger {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff88, #00cc70);
+            color: #0a0e1a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(0,255,136,0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 18px;
+            display: none;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .alert.show { display: flex; }
+
+        .alert-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+            color: #6ee7b7;
+        }
+
+        .alert-warning {
+            background: rgba(251,191,36,0.1);
+            border: 1px solid rgba(251,191,36,0.3);
+            color: #fcd34d;
+        }
+
+        .security-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(0,255,136,0.05);
+            border: 1px solid rgba(0,255,136,0.15);
+            border-radius: 8px;
+            margin-top: 18px;
+        }
+
+        .security-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .security-indicator span {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .security-indicator strong {
+            color: #00ff88;
+        }
+
+        /* SQL Injection Tester Section */
+        .tester-section {
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid #1f2937;
+        }
+
+        .tester-section h3 {
+            color: #f9fafb;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tester-section p {
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .payload-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #9ca3af;
+            cursor: pointer;
+            font-family: monospace;
+            transition: all 0.15s;
+        }
+
+        .chip:hover {
+            border-color: #ef4444;
+            color: #fca5a5;
+            background: rgba(239,68,68,0.1);
+        }
+
+        .test-result {
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: monospace;
+            display: none;
+        }
+
+        .test-result.show { display: block; }
+        .test-result.blocked { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+        .test-result.allowed { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); color: #6ee7b7; }
+
+        .divider {
+            text-align: center;
+            color: #374151;
+            font-size: 12px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #1f2937;
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="shield">🛡️</div>
+            <h1>SecureAuth</h1>
+            <p>SQL Injection Detection System</p>
+            <span class="badge">⚡ DOUBLE-LAYER SECURITY ACTIVE</span>
+        </div>
+
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">Login</button>
+                <button class="tab" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Alert Box -->
+            <div class="alert" id="alert">
+                <span id="alertIcon">⚠️</span>
+                <div>
+                    <strong id="alertTitle"></strong>
+                    <p id="alertMsg" style="font-size:12px; margin-top:3px; opacity:0.8;"></p>
+                </div>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password">
+                </div>
+                <button class="btn btn-primary" onclick="handleLogin()" id="loginBtn">
+                    🔐 Login Securely
+                </button>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div id="registerForm" style="display:none">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="regUsername" placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label>Email <span style="color:#4a5568; font-size:11px;">(AES-256 encrypted)</span></label>
+                    <input type="email" id="regEmail" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Strong password">
+                </div>
+                <button class="btn btn-primary" onclick="handleRegister()" id="registerBtn">
+                    ✅ Create Secure Account
+                </button>
+            </div>
+
+            <div class="security-indicator">
+                <div class="dot"></div>
+                <span><strong>Layer 1:</strong> SQLi Detection Active &nbsp;|&nbsp; <strong>Layer 2:</strong> Parameterized Queries</span>
+            </div>
+
+            <!-- SQL INJECTION TESTER -->
+            <div class="tester-section">
+                <h3>🧪 Live Injection Tester</h3>
+                <p>Click a payload to test how the system responds — for educational purposes</p>
+                <div class="payload-chips">
+                    <span class="chip" onclick="testPayload(this.textContent)">' OR '1'='1</span>
+                    <span class="chip" onclick="testPayload(this.textContent)">admin'--</span>
+                    <span class="chip" onclick="testPayload(this.textContent)">'; DROP TABLE users;--</span>
+                    <span class="chip" onclick="testPayload(this.textContent)">UNION SELECT * FROM users</span>
+                    <span class="chip" onclick="testPayload(this.textContent)">SLEEP(5)</span>
+                    <span class="chip" onclick="testPayload(this.textContent)" style="border-color:#00ff88; color:#00ff88;">normaluser</span>
+                </div>
+                <div class="test-result" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let capabilityCode = null;
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+            hideAlert();
+        }
+
+        function showAlert(type, title, msg) {
+            const el = document.getElementById('alert');
+            el.className = `alert alert-${type} show`;
+            document.getElementById('alertTitle').textContent = title;
+            document.getElementById('alertMsg').textContent = msg;
+            document.getElementById('alertIcon').textContent = type === 'error' ? '🚫' : type === 'success' ? '✅' : '⚠️';
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').classList.remove('show');
+        }
+
+        async function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showAlert('warning', 'Missing Fields', 'Please enter both username and password.');
+                return;
+            }
+
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Verifying...';
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (res.status === 403) {
+                    // SQL injection detected by middleware
+                    document.getElementById('loginUsername').classList.add('danger');
+                    document.getElementById('loginPassword').classList.add('danger');
+                    showAlert('error', '🚨 SQL Injection Detected!', data.message || 'Your input was flagged as malicious and has been blocked and logged.');
+                    setTimeout(() => {
+                        document.getElementById('loginUsername').classList.remove('danger');
+                        document.getElementById('loginPassword').classList.remove('danger');
+                    }, 1000);
+                } else if (data.success) {
+                    capabilityCode = data.capability_code;
+                    localStorage.setItem('cap_code', capabilityCode);
+                    showAlert('success', 'Login Successful!', `Welcome back, ${data.username}!`);
+                    setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
+                } else {
+                    showAlert('error', 'Login Failed', data.error || 'Invalid credentials.');
+                }
+            } catch (e) {
+                showAlert('error', 'Connection Error', 'Could not reach the server.');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '🔐 Login Securely';
+        }
+
+        async function handleRegister() {
+            const username = document.getElementById('regUsername').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+
+            if (!username || !email || !password) {
+                showAlert('warning', 'Missing Fields', 'All fields are required.');
+                return;
+            }
+
+            const btn = document.getElementById('registerBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Creating Account...';
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.status === 403) {
+                    showAlert('error', '🚨 SQL Injection Detected!', 'Malicious input blocked. Your attempt has been logged.');
+                } else if (data.success) {
+                    showAlert('success', 'Account Created!', 'Your credentials have been encrypted with AES-256 and stored securely.');
+                    setTimeout(() => switchTab('login'), 2000);
+                } else {
+                    showAlert('error', 'Registration Failed', data.error || 'Could not create account.');
+                }
+            } catch (e) {
+                showAlert('error', 'Connection Error', 'Could not reach the server.');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '✅ Create Secure Account';
+        }
+
+        async function testPayload(payload) {
+            const resultEl = document.getElementById('testResult');
+            resultEl.className = 'test-result show';
+            resultEl.textContent = '⏳ Testing...';
+
+            try {
+                const res = await fetch('/api/test-injection', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ payload })
+                });
+
+                const data = await res.json();
+
+                if (data.is_safe) {
+                    resultEl.className = 'test-result show allowed';
+                    resultEl.textContent = `✅ ALLOWED — "${payload}" passed security checks`;
+                } else {
+                    resultEl.className = 'test-result show blocked';
+                    resultEl.textContent = `🚫 BLOCKED — Threat: ${data.threat_level.toUpperCase()} | "${payload}"`;
+                }
+            } catch (e) {
+                resultEl.className = 'test-result show blocked';
+                resultEl.textContent = `🚫 BLOCKED at middleware — Request rejected before reaching API`;
+            }
+        }
+
+        // Enter key support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (document.getElementById('loginForm').style.display !== 'none') handleLogin();
+                else handleRegister();
+            }
+        });
+    </script>
+</body>
+</html>
