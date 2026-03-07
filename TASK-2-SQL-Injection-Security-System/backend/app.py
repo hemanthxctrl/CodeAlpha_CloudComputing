@@ -23,7 +23,7 @@ from database import UserRepository, AttackLogRepository
 # ============================================================
 # APP INITIALIZATION
 # ============================================================
-app = Flask(__name__, template_folder="../frontend", static_folder="../frontend/assets")
+app = Flask(__name__, template_folder="../Frontend")
 app.secret_key = os.environ.get("FLASK_SECRET", "change-this-in-production-please")
 
 # Rate limiter — prevents brute force attacks
