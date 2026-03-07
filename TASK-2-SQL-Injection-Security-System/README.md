@@ -3,11 +3,11 @@
 🌐 Internet  
    ↓  
 🖥️ AWS EC2 / Elastic Beanstalk ☁️  
-   ├─ 👩‍💻 Frontend (HTML/CSS/JS) ◄── User interacts here  
+   ├─ 👩‍💻 Frontend (HTML/CSS/JS)               ◄─ User interacts here  
    ├─ 🐍 Backend (Python Flask)  
-   ├─ 🛡️ Layer 1: SQLi Detection Middleware ◄── Blocks attacks  
-   ├─ 🔒 Layer 2: Parameterized Queries ◄── Prevents injection  
-   └─ 🔐 AES-256 Encryption Module ◄── Protects stored data  
+   ├─ 🛡️ Layer 1: SQLi Detection Middleware   ◄─ Blocks attacks  
+   ├─ 🔒 Layer 2: Parameterized Queries       ◄─ Prevents injection  
+   └─ 🔐 AES-256 Encryption Module            ◄─ Protects stored data  
          ↓  
 🗄️ AWS RDS (MySQL) → stores users, logs, encrypted credentials 💾
 
