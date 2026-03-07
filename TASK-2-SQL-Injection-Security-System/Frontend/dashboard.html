@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Dashboard — SQL Injection Monitor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0e1a;
+            color: #f9fafb;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #111827;
+            border-bottom: 1px solid #1f2937;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #00ff88;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #00ff88;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .logout-btn {
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #9ca3af;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover { color: #ef4444; border-color: #ef4444; }
+
+        .main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .page-sub {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .stat-card.total::before { background: #3b82f6; }
+        .stat-card.critical::before { background: #ef4444; }
+        .stat-card.high::before { background: #f97316; }
+        .stat-card.medium::before { background: #eab308; }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-card.total .stat-value { color: #3b82f6; }
+        .stat-card.critical .stat-value { color: #ef4444; }
+        .stat-card.high .stat-value { color: #f97316; }
+        .stat-card.medium .stat-value { color: #eab308; }
+
+        .stat-sub { color: #4b5563; font-size: 12px; }
+
+        .section {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #e5e7eb;
+        }
+
+        .refresh-btn {
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #9ca3af;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .refresh-btn:hover { color: #00ff88; border-color: #00ff88; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            background: #0d1117;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        td {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid #1a2234;
+            color: #d1d5db;
+        }
+
+        tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.critical { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+        .badge.high { background: rgba(249,115,22,0.15); color: #fdba74; border: 1px solid rgba(249,115,22,0.3); }
+        .badge.medium { background: rgba(234,179,8,0.15); color: #fde047; border: 1px solid rgba(234,179,8,0.3); }
+
+        .payload-cell {
+            font-family: monospace;
+            font-size: 12px;
+            color: #ef4444;
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .loading { text-align: center; padding: 40px; color: #6b7280; }
+
+        .encryption-demo {
+            padding: 20px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .demo-box {
+            background: #0a0e1a;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        .demo-box label {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .demo-box .value {
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            color: #e5e7eb;
+        }
+
+        .demo-box.encrypted .value { color: #00ff88; opacity: 0.7; }
+
+        .enc-input {
+            width: 100%;
+            padding: 10px;
+            background: #0a0e1a;
+            border: 1px solid #1f2937;
+            border-radius: 6px;
+            color: #f9fafb;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            background: #00ff88;
+            border: none;
+            border-radius: 6px;
+            color: #0a0e1a;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-sm:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0,255,136,0.3); }
+
+        .empty-state { text-align: center; padding: 40px; color: #6b7280; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand">🛡️ SecureAuth Monitor</div>
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            Protection Active
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="main">
+        <div class="page-title">🔍 Security Dashboard</div>
+        <div class="page-sub" id="lastUpdated">Loading attack statistics...</div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="stat-label">Total Attacks Blocked</div>
+                <div class="stat-value" id="statTotal">—</div>
+                <div class="stat-sub">All time</div>
+            </div>
+            <div class="stat-card critical">
+                <div class="stat-label">Critical Threats</div>
+                <div class="stat-value" id="statCritical">—</div>
+                <div class="stat-sub">DROP/UNION attacks</div>
+            </div>
+            <div class="stat-card high">
+                <div class="stat-label">High Severity</div>
+                <div class="stat-value" id="statHigh">—</div>
+                <div class="stat-sub">Auth bypass attempts</div>
+            </div>
+            <div class="stat-card medium">
+                <div class="stat-label">Medium Severity</div>
+                <div class="stat-value" id="statMedium">—</div>
+                <div class="stat-sub">Pattern-based attacks</div>
+            </div>
+        </div>
+
+        <!-- Attack Log Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">🚨 Recent Attack Log</span>
+                <button class="refresh-btn" onclick="loadAttacks()">↻ Refresh</button>
+            </div>
+            <div id="attackTableContainer">
+                <div class="loading">⏳ Loading attack data...</div>
+            </div>
+        </div>
+
+        <!-- AES-256 Encryption Demo -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">🔐 AES-256 Encryption Demo</span>
+            </div>
+            <div class="encryption-demo">
+                <p style="color:#6b7280; font-size:13px; margin-bottom:14px;">
+                    See how user data gets encrypted before storage. Try typing sensitive info below:
+                </p>
+                <input type="text" class="enc-input" id="encInput" 
+                    placeholder="Type something sensitive... (e.g. john@email.com)" 
+                    oninput="demoEncrypt()">
+                <div class="demo-grid">
+                    <div class="demo-box">
+                        <label>📝 Plaintext (what you type)</label>
+                        <div class="value" id="plainVal">—</div>
+                    </div>
+                    <div class="demo-box encrypted">
+                        <label>🔐 AES-256 Encrypted (what's in DB)</label>
+                        <div class="value" id="encVal">—</div>
+                    </div>
+                </div>
+                <p style="color:#374151; font-size:11px; margin-top:10px;">
+                    Note: Real encryption runs server-side. This demo shows the concept. Each encryption produces a unique output due to random IV.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const capCode = localStorage.getItem('cap_code') || '';
+
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats', {
+                    headers: { 'X-Capability-Code': capCode }
+                });
+                if (res.status === 401) { window.location.href = '/'; return; }
+                
+                const data = await res.json();
+                const stats = data.file_stats || {};
+
+                document.getElementById('statTotal').textContent = stats.total || 0;
+                document.getElementById('statCritical').textContent = stats.critical || 0;
+                document.getElementById('statHigh').textContent = stats.high || 0;
+                document.getElementById('statMedium').textContent = stats.medium || 0;
+                document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+            } catch (e) {
+                document.getElementById('lastUpdated').textContent = 'Could not load stats.';
+            }
+        }
+
+        async function loadAttacks() {
+            const container = document.getElementById('attackTableContainer');
+            container.innerHTML = '<div class="loading">⏳ Loading...</div>';
+
+            try {
+                const res = await fetch('/api/attacks', {
+                    headers: { 'X-Capability-Code': capCode }
+                });
+
+                if (res.status === 401) { window.location.href = '/'; return; }
+
+                const data = await res.json();
+                const attacks = data.attacks || [];
+
+                if (attacks.length === 0) {
+                    container.innerHTML = '<div class="empty-state">✅ No attacks detected yet. System is clean.</div>';
+                    return;
+                }
+
+                const rows = attacks.map(a => `
+                    <tr>
+                        <td>${a.detected_at || '—'}</td>
+                        <td style="font-family:monospace; color:#60a5fa;">${a.attacker_ip || '—'}</td>
+                        <td>${a.targeted_field || '—'}</td>
+                        <td class="payload-cell" title="${a.payload}">${a.payload || '—'}</td>
+                        <td><span class="badge ${a.threat_level}">${a.threat_level || '—'}</span></td>
+                        <td style="color:#6b7280;">${a.endpoint || '—'}</td>
+                    </tr>
+                `).join('');
+
+                container.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Attacker IP</th>
+                                <th>Field</th>
+                                <th>Payload</th>
+                                <th>Severity</th>
+                                <th>Endpoint</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                `;
+            } catch (e) {
+                container.innerHTML = '<div class="empty-state">⚠️ Could not load attack data. Check your session.</div>';
+            }
+        }
+
+        function demoEncrypt() {
+            const input = document.getElementById('encInput').value;
+            document.getElementById('plainVal').textContent = input || '—';
+            
+            if (!input) {
+                document.getElementById('encVal').textContent = '—';
+                return;
+            }
+
+            // Simulate AES-256 encrypted output (visual demo — real encryption is server-side)
+            const fakeEncrypted = btoa(input).split('').map((c, i) => 
+                i % 4 === 0 ? c.toUpperCase() : i % 3 === 0 ? c.charCodeAt(0).toString(16) : c
+            ).join('') + '==';
+
+            document.getElementById('encVal').textContent = fakeEncrypted.substring(0, 80) + (fakeEncrypted.length > 80 ? '...' : '');
+        }
+
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            localStorage.removeItem('cap_code');
+            window.location.href = '/';
+        }
+
+        // Auto-refresh every 30 seconds
+        loadStats();
+        loadAttacks();
+        setInterval(() => { loadStats(); loadAttacks(); }, 30000);
+    </script>
+</body>
+</html>
