@@ -39,8 +39,8 @@ Can be hosted on AWS with minimal system requirements.
 📊 Attack Monitoring & Logs
 Records all attack attempts including:
 
-Attacker IP address
-Timestamp
+Attacker IP address,
+Timestamp,
 Malicious payload
 
 # Architecture
