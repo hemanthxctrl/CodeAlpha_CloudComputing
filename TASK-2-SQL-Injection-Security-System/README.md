@@ -1,3 +1,17 @@
+# Architecture Overview
+
+🌐 Internet
+   ↓
+🖥️ AWS EC2 / Elastic Beanstalk ☁️
+   ├─ 👩‍💻 Frontend → HTML5 🌐 + CSS3 🎨 + JS ⚡
+   ├─ 🐍 Backend (Flask 🌶️)
+   ├─ 🛡️ Layer 1: SQLi Detection (blocks attacks 🚫)
+   ├─ 🔒 Layer 2: Parameterized Queries (prevents injection)
+   └─ 🔐 AES-256 Encryption
+         ↓
+🗄️ AWS RDS (MySQL) → stores encrypted users / credentials 💾
+
+
 # File Tree: CodeAlpha_CloudComputing
 
 
