@@ -1,6 +1,7 @@
 # Detecting Data Leaks Using SQL Injection — Cloud Security System
 
 A cloud-hosted double-layer security system designed to detect, prevent, and monitor SQL Injection attacks in real time.
+
 The system protects sensitive user data using AES-256 encryption and can be deployed on the cloud (AWS) without heavy system requirements.
 
 # Problem
