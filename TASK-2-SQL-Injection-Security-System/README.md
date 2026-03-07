@@ -6,27 +6,27 @@
 ```
 ├── 📁 TASK-2-SQL-Injection-Security-System
 │   ├── 📁 Database
-│   │   └── 📄 schema.sql
+│   │   └── 📄 schema.sql              ← MySQL schema for RDS
 |   |
 │   ├── 📁 Docs
-│   │   ├── 📝 DEPLOYMENT.md
-│   │   └── 📝 SCREENSHOTS_GUIDE.md
+│   │   ├── 📝 DEPLOYMENT.md           ← Full step-by-step AWS guide
+│   │   └── 📝 SCREENSHOTS_GUIDE.md    ← screenshots 
 |   |
 │   ├── 📁 Frontend
-│   │   ├── 🌐 dashboard.html
-│   │   └── 🌐 index.html
+│   │   ├── 🌐 dashboard.html        ← Security monitoring dashboard
+│   │   └── 🌐 index.html            ← Login page + live injection tester
 |   |
 │   ├── 📁 backend
-│   │   ├── 🐍 app.py
-│   │   ├── 🐍 config.py
-│   │   ├── 🐍 database.py
-│   │   ├── 🐍 encryption.py
-│   │   ├── 🐍 sql_detector.py
-│   │   └── 📄 requirements.txt
+│   │   ├── 🐍 app.py                ← Main Flask server + security middleware
+│   │   ├── 🐍 config.py             ← Environment config
+│   │   ├── 🐍 database.py           ← Parameterized queries (Layer 2 security)
+│   │   ├── 🐍 encryption.py         ← AES-256 + password hashing + capability codes
+│   │   ├── 🐍 sql_detector.py       ← 15 SQLi patterns, detection engine
+│   │   └── 📄 requirements.txt      ← All Python dependencies
 |   |
 │   ├── 📁 infrastructure
-│   │   └── 📄 setup_aws.sh
-│   └── 📝 README.md
+│   │   └── 📄 setup_aws.sh          ← One-command EC2 setup
+│   └── 📝 README.md                 ← Overview of project   
 |
 ├── ⚙️ .env.example
 ├── ⚙️ .gitignore
