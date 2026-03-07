@@ -6,6 +6,7 @@ The system protects sensitive user data using AES-256 encryption and can be depl
 🚨 Problem
 
 SQL Injection is one of the most common and dangerous web attacks (OWASP Top 10).
+
 Attackers insert malicious SQL queries into input fields such as login forms to:
 
 🔓 Bypass authentication (' OR '1'='1)
