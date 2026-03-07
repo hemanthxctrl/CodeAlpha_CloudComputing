@@ -3,7 +3,7 @@
 A cloud-hosted double-layer security system designed to detect, prevent, and monitor SQL Injection attacks in real time.
 The system protects sensitive user data using AES-256 encryption and can be deployed on the cloud (AWS) without heavy system requirements.
 
-## Problem
+# Problem
 
 SQL Injection is one of the most common and dangerous web attacks (OWASP Top 10).
 
@@ -17,7 +17,7 @@ Attackers insert malicious SQL queries into input fields such as login forms to:
 
 Without proper protection, these attacks can cause serious data leaks and security breaches.
 
-## Solution
+# Solution
 
 This project implements a Cloud-Based Security System that protects applications from SQL injection and data leaks.
 
@@ -42,7 +42,7 @@ Attacker IP address
 Timestamp
 Malicious payload
 
-## Architecture
+# Architecture
 
 🌐 Internet  
    ↓  
