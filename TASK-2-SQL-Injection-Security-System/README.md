@@ -100,25 +100,23 @@ Malicious payload
 🔑 AES-256 Encryption
 
 AES-256 is a powerful encryption standard used for high-security data protection.
+
 In this system, sensitive data is encrypted before storing in the database.
 
 Even if attackers steal the database, the data appears as unreadable characters.
 
 Example:
-
 Ω9∂π3F@#x8!K2L$...
+
 🧩 Parameterized Queries
 
-Parameterized queries prevent SQL injection by separating user input from SQL commands.
-
+Parameterized queries prevent SQL injection by separating user input from SQL commands. 
 ❌ Unsafe query
 
 SELECT * FROM users WHERE name = ' + user_input + '
-
 ✅ Secure query
 
 SELECT * FROM users WHERE name = ?
-
 The database treats input only as data, not executable code.
 
 🛡️ Double-Layer Security
