@@ -165,3 +165,16 @@ Uses parameterized queries so injection fails even if Layer 1 is bypassed.
 * ✅ REST API with Rate Limiting
 * ✅ AWS RDS MySQL Database
 * ✅ Deployable on AWS EC2 Free Tier
+
+# Your Deployment Order 🚀 
+
+AWS RDS → Create MySQL DB (free tier, ~5 min)
+AWS EC2 → Launch Ubuntu t2.micro (free tier, ~2 min)
+Upload code → SCP or git clone to EC2
+Run setup_aws.sh → installs everything automatically
+Edit .env → add your RDS endpoint + passwords
+Run schema.sql → initializes the database
+Start the service → systemctl start sqlidetector
+Test → try injection payloads from the live tester on the login page
+Screenshot → follow docs/SCREENSHOTS_GUIDE.md
+Push to GitHub → git push and it's live on your profile!
