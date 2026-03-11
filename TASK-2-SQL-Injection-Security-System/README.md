@@ -228,7 +228,7 @@ sudo apt-get install -y python3 python3-pip python3-venv nginx git mysql-client
 
 ### Phase 5 — Upload Project
 
-# From your local machine:
+## From your local machine:
 scp -i your-key.pem -r TASK-2-SQL-Injection-Security-System/ ubuntu@YOUR_EC2_IP:/opt/sqlidetector/
 
 Or clone from GitHub:
@@ -275,13 +275,13 @@ nohup python app.py > /tmp/app.log 2>&1 &
 
 ### Phase 10 — Verify
 
-# Check app is running
+## Check app is running
 ps aux | grep python
 
-# Check logs
+## Check logs
 cat /tmp/app.log
 
-# Test in browser
+## Test in browser
 http://YOUR_EC2_PUBLIC_IP:5000
 ```
 
