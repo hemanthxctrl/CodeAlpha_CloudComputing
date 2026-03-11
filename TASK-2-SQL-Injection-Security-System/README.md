@@ -47,31 +47,31 @@ Malicious payload
 ## 📸 Screenshots
 
 ### 🔐 Login Page — Live on AWS
-![Login Page](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/login_page.png)
+![Login Page](/screenshots/login_page.png)
 
 ### 🚫 SQL Injection Blocked
-![SQL Injection Blocked](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/sql_injection_blocked.png)
+![SQL Injection Blocked](/screenshots/sql_injection_blocked.png)
 
 ### 💣 DROP TABLE Attack — CRITICAL Blocked
-![Drop Table Blocked](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/drop_table_blocked.png)
+![Drop Table Blocked](/screenshots/drop_table_blocked.png)
 
 ### ✅ Register Success — AES-256 Encrypted
-![Register Success](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/register_success.png)
+![Register Success](/screenshots/register_success.png)
 
 ### 📊 Security Dashboard
-![Dashboard](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/dashboard.png)
+![Dashboard](/screenshots/dashboard.png)
 
 ### ☁️ AWS EC2 Instance Running
-![AWS EC2](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/aws_ec2_running.png)
+![AWS EC2](/screenshots/aws_ec2_running.png)
 
 ### 🗄️ AWS RDS Database Available
-![AWS RDS](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/aws_rds_available.png)
+![AWS RDS](/screenshots/aws_rds_available.png)
 
 ### 📋 Attack Log Terminal
-![Attack Log](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/attack_log_terminal.png)
+![Attack Log](/screenshots/attack_log_terminal.png)
 
 ### 🗃️ Database Tables
-![Database Tables](https://raw.githubusercontent.com/hemanthxctl/CodeAlpha_CloudComputing/main/TASK-2-SQL-Injection-Security-System/screenshots/database_tables.png)
+![Database Tables](/screenshots/database_tables.png)
 
 
 # Tech Stack 👨‍💻 
