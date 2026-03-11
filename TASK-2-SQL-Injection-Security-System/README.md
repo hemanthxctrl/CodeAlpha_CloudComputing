@@ -47,31 +47,31 @@ Malicious payload
 ## 📸 Screenshots
 
 ### 🔐 Login Page — Live on AWS
-![Login Page](/screenshots/login_page.png)
+![Login Page](/TASK-2-SQL-Injection-Security-System/screenshots/login_page.png)
 
 ### 🚫 SQL Injection Blocked
-![SQL Injection Blocked](/screenshots/sql_injection_blocked.png)
+![SQL Injection Blocked](/TASK-2-SQL-Injection-Security-System/screenshots/sql_injection_blocked.png)
 
 ### 💣 DROP TABLE Attack — CRITICAL Blocked
 ![Drop Table Blocked](/TASK-2-SQL-Injection-Security-System/screenshots/drop_table_blocked.png)
 
 ### ✅ Register Success — AES-256 Encrypted
-![Register Success](/screenshots/register_success.png)
+![Register Success](/TASK-2-SQL-Injection-Security-System/screenshots/register_success.png)
 
 ### 📊 Security Dashboard
-![Dashboard](/screenshots/dashboard.png)
+![Dashboard](/TASK-2-SQL-Injection-Security-System/screenshots/dashboard.png)
 
 ### ☁️ AWS EC2 Instance Running
-![AWS EC2](/screenshots/aws_ec2_running.png)
+![AWS EC2](/TASK-2-SQL-Injection-Security-System/screenshots/aws_ec2_running.png)
 
 ### 🗄️ AWS RDS Database Available
-![AWS RDS](/screenshots/aws_rds_available.png)
+![AWS RDS](/TASK-2-SQL-Injection-Security-System/screenshots/aws_rds_available.png)
 
 ### 📋 Attack Log Terminal
-![Attack Log](/screenshots/attack_log_terminal.png)
+![Attack Log](/TASK-2-SQL-Injection-Security-System/screenshots/attack_log_terminal.png)
 
 ### 🗃️ Database Tables
-![Database Tables](/screenshots/database_tables.png)
+![Database Tables](/TASK-2-SQL-Injection-Security-System/screenshots/database_tables.png)
 
 
 # Tech Stack 👨‍💻 
