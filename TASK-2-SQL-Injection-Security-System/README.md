@@ -53,7 +53,7 @@ Malicious payload
 ![SQL Injection Blocked](/screenshots/sql_injection_blocked.png)
 
 ### 💣 DROP TABLE Attack — CRITICAL Blocked
-![Drop Table Blocked](/screenshots/drop_table_blocked.png)
+![Drop Table Blocked](/TASK-2-SQL-Injection-Security-System/screenshots/drop_table_blocked.png)
 
 ### ✅ Register Success — AES-256 Encrypted
 ![Register Success](/screenshots/register_success.png)
