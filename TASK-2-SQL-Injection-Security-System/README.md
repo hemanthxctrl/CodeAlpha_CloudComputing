@@ -119,6 +119,30 @@ Malicious payload
 | `admin / password123`           | Normal Login            | ✅ ALLOWED       |
 
 
+## 📊 How Double-Layer Security Works
+```
+        User Input
+            │
+            ▼
+┌─────────────────────────────┐
+│  LAYER 1: SQLi Detector     │  ← Regex scans ALL inputs
+│  15 attack patterns checked │  ← Blocks if match found
+│  Attack logged to DB        │  ← IP + payload recorded
+└─────────────────────────────┘
+    (only clean input passes)
+            │ 
+            ▼
+┌─────────────────────────────┐
+│  LAYER 2: Parameterized     │  ← Query uses %s placeholders
+│  Queries                    │  ← Input treated as pure data
+│  Injection structurally     │  ← Even bypassed Layer 1 fails
+│  impossible                 │
+└─────────────────────────────┘
+            │
+            ▼
+  Database (AWS RDS)
+  All stored data AES-256 encrypted
+```
 
 
 # Security Concepts
@@ -168,17 +192,107 @@ Uses parameterized queries so injection fails even if Layer 1 is bypassed.
 
 # Your Deployment Order 🚀 
 
-1.AWS RDS → Create MySQL DB (free tier, ~5 min)
-2.AWS EC2 → Launch Ubuntu t2.micro (free tier, ~2 min)
-3.Upload code → SCP or git clone to EC2
-4.Run setup_aws.sh → installs everything automatically
-5.Edit .env → add your RDS endpoint + passwords
-6.Run schema.sql → initializes the database
-7.Start the service → systemctl start sqlidetector
-8.Test → try injection payloads from the live tester on the login page
-9.Screenshot → follow docs/SCREENSHOTS_GUIDE.md
-10.Push to GitHub → git push and it's live on your profile!
+## Deployment Order
+
+### Phase 1 — AWS RDS (Database)
+
+1. Go to **AWS Console → RDS → Create Database**
+2. Select: MySQL, Free tier, `db.t3.micro`
+3. Set master username: `admin` and a strong password
+4. Enable **Public access: Yes**
+5. Wait for status to show **Available**
+6. Copy the **Endpoint URL**
+
+### Phase 2 — AWS EC2 (Server)
+
+1. Go to **AWS Console → EC2 → Launch Instance**
+2. Select: **Ubuntu 22.04 LTS**, `t2.micro` (free tier)
+3. Create a new key pair → download `.pem` file
+4. Security group — add inbound rules:
+   - Port 22 → My IP (SSH)
+   - Port 80 → Anywhere (HTTP)
+   - Port 5000 → Anywhere (Flask)
+5. Launch the instance
+
+### Phase 3 — Connect to EC2
+
+chmod 400 your-key.pem
+ssh -i your-key.pem ubuntu@YOUR_EC2_PUBLIC_IP
 
 
-# License
-This project is released under the MIT License.
+### Phase 4 — Install Dependencies on EC2
+
+sudo apt-get update -y
+sudo apt-get install -y python3 python3-pip python3-venv nginx git mysql-client
+
+
+### Phase 5 — Upload Project
+
+# From your local machine:
+scp -i your-key.pem -r TASK-2-SQL-Injection-Security-System/ ubuntu@YOUR_EC2_IP:/opt/sqlidetector/
+
+Or clone from GitHub:
+
+git clone https://github.com/YOUR_USERNAME/sql-injection-detector.git
+
+
+### Phase 6 — Setup Python Environment
+
+cd /opt/sqlidetector
+python3 -m venv venv
+source venv/bin/activate
+pip install -r backend/requirements.txt
+
+
+### Phase 7 — Configure Environment Variables
+
+nano /opt/sqlidetector/backend/.env
+
+Fill in:
+```
+FLASK_ENV=production
+FLASK_SECRET=your-random-secret-key
+SECRET_KEY=your-aes-256-key
+CAPABILITY_SECRET=your-capability-secret
+DB_HOST=YOUR_RDS_ENDPOINT
+DB_PORT=3306
+DB_NAME=security_db
+DB_USER=admin
+DB_PASSWORD=YOUR_RDS_PASSWORD
+PORT=5000
+```
+
+### Phase 8 — Initialize Database
+
+mysql -h YOUR_RDS_ENDPOINT -u admin -p security_db < Database/schema.sql
+
+
+### Phase 9 — Run the Application
+
+cd backend
+nohup python app.py > /tmp/app.log 2>&1 &
+
+
+### Phase 10 — Verify
+
+# Check app is running
+ps aux | grep python
+
+# Check logs
+cat /tmp/app.log
+
+# Test in browser
+http://YOUR_EC2_PUBLIC_IP:5000
+```
+
+# Developed by:
+
+- Hemanth Sreenivas
+- CodeAlpha Virtual Internship
+- Cloud Computing
+- Task 2 — Detecting Data Leaks Using SQL Injection
+
+---
+
+*Built and deployed on AWS as part of CodeAlpha Cloud Computing Virtual Internship*
+
