@@ -1,1 +1,2 @@
-# 
+# 🤖 NexaBot — AI-Powered Chatbot
+
