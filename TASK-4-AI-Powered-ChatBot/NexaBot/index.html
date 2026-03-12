@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexaBot – AI Chatbot | CodeAlpha Cloud Computing</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- ==========================================
+       API KEY SETUP MODAL
+       Shows on first load so user can connect
+       their Anthropic API key to power Claude AI
+  =========================================== -->
+  <div id="api-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-icon">🤖</div>
+      <h2>Connect NexaBot AI</h2>
+      <p>Enter your <strong>Anthropic API key</strong> to power this chatbot with Claude AI. Your key is stored only in your current browser session for security.</p>
+      <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
+      <button class="btn-save" onclick="saveApiKey()">Launch Chatbot →</button>
+      <p class="modal-note">🔒 Key is never sent anywhere except api.anthropic.com</p>
+      <span class="skip-link" onclick="skipApiKey()">Use Demo Mode (predefined responses only)</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MAIN WEBSITE — Commercial Demo Context
+       Simulates a real e-commerce website where
+       the chatbot is embedded and integrated
+  =========================================== -->
+  <div class="site-wrapper">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-logo">⬡ NexaShop</div>
+      <ul class="nav-links">
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Solutions</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+      <button class="nav-cta">Get Started</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">✦ CodeAlpha Task 4 — Cloud Computing</div>
+        <h1>AI-Powered<br/>Commerce, Redefined</h1>
+        <p>Experience the future of customer support. NexaBot answers questions instantly, 24/7 — trained for your business needs using retrieval-based and generative AI models.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="openChat()">💬 Chat with NexaBot</button>
+          <button class="btn-ghost">Explore Features</button>
+        </div>
+      </div>
+      <div class="hero-glow"></div>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Responses</h3>
+        <p>Sub-second replies powered by pattern matching + Claude AI. Zero wait for customers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Trained Patterns</h3>
+        <p>Pre-loaded with FAQs, product info, and commercial intents for accurate answers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Generative AI</h3>
+        <p>Uses Claude (Anthropic) for contextual, human-like conversations beyond rigid scripts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>User Engagement</h3>
+        <p>Quick replies, typing indicators, and proactive suggestions boost user engagement.</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>© 2025 NexaShop · Built by <strong>CodeAlpha Intern</strong> · Task 4: AI Chatbot (Cloud Computing)</p>
+    </footer>
+  </div>
+
+  <!-- ==========================================
+       FLOATING CHAT WIDGET
+       The button that opens/closes the chatbot.
+       Fixed position, always visible on website.
+  =========================================== -->
+  <button id="chat-toggle" onclick="toggleChat()" title="Chat with NexaBot">
+    <span id="toggle-icon">💬</span>
+  </button>
+
+  <!-- ==========================================
+       CHAT PANEL
+       The full chatbot UI — header, messages,
+       quick replies, and input area.
+  =========================================== -->
+  <div id="chat-panel">
+
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="bot-avatar">🤖</div>
+        <div class="bot-info">
+          <h4>NexaBot</h4>
+          <span class="status-dot">● Online – AI Powered</span>
+        </div>
+      </div>
+      <div class="chat-header-right">
+        <button class="header-btn" onclick="clearChat()" title="Clear chat">🗑</button>
+        <button class="header-btn" onclick="toggleChat()" title="Close">✕</button>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div id="messages"></div>
+
+    <!-- Quick Reply Chips (predefined intents) -->
+    <div class="quick-replies" id="quick-replies">
+      <span class="chip" onclick="sendQuick('What products do you offer?')">🛍️ Products</span>
+      <span class="chip" onclick="sendQuick('What are your pricing plans?')">💰 Pricing</span>
+      <span class="chip" onclick="sendQuick('How do I track my order?')">📦 Orders</span>
+      <span class="chip" onclick="sendQuick('I need technical support')">🔧 Support</span>
+      <span class="chip" onclick="sendQuick('What are your business hours?')">🕐 Hours</span>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+      <div class="input-row">
+        <input type="text" id="user-input" placeholder="Ask me anything..." onkeydown="handleKey(event)" />
+        <button id="send-btn" onclick="sendMessage()" title="Send">➤</button>
+      </div>
+      <div class="input-hint">Powered by Claude AI · CodeAlpha Task 4</div>
+    </div>
+
+  </div>
+
+  <!-- Load the chatbot JavaScript logic -->
+  <script src="assets/js/chatbot.js"></script>
+
+</body>
+</html>
