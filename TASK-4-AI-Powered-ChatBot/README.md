@@ -130,3 +130,13 @@ Paste it into the chatbot when prompted
 | Any off-topic question                                | Claude AI redirects politely | Guardrails     |
 
 
+# Developed by:
+
+- Hemanth Sreenivas
+- CodeAlpha Virtual Internship
+- Cloud Computing
+- Task-4-AI-Powered-ChatBot
+
+---
+
+*Built and deployed on AWS as part of CodeAlpha Cloud Computing Virtual Internship*
