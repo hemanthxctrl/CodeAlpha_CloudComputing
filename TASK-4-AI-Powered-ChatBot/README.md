@@ -77,17 +77,19 @@ User-friendly error messages for each scenario
 # Architecture Diagram
 
 
+```mermaid
 flowchart TD
-    A[User Types Message] --> B[Pattern Matching Engine\n(Retrieval-Based)]
+    A[User Types Message] --> B[Pattern Matching Engine (Retrieval-Based)]
     B --> C{Keyword Match?}
 
-    C -->|Yes| D[Instant Response\n(<500ms, Free)]
-    C -->|No| E[Claude AI API\n(Generative AI)]
+    C -->|Yes| D[Instant Response (<500ms, Free)]
+    C -->|No| E[Claude AI API (Generative AI)]
 
-    E --> F[Uses System Prompt\n+ Full Conversation Context]
+    E --> F[Uses System Prompt + Full Conversation Context]
     F --> G[AI Generated Response]
 
-    B --- H[Checks 60+ Keywords\nAcross 9 Intent Categories]
+    B --- H[Checks 60+ Keywords Across 9 Intent Categories]
+```
 
 
 # How to Run
