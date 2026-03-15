@@ -1,5 +1,18 @@
 # 🤖 NexaBot — AI-Powered Chatbot
 
+# Project Overview 
+NexaBot is a fully functional AI-powered chatbot built for a fictional e-commerce platform called NexaShop. It demonstrates how modern businesses embed AI customer support directly into their websites.
+
+The chatbot uses a hybrid AI architecture:
+
+Retrieval-Based Layer — 
+Instantly matches user queries to predefined commercial patterns 
+(products, pricing, orders, support, etc.)
+
+Generative AI Layer — 
+Falls back to Claude (Anthropic) for any question outside predefined patterns, enabling truly intelligent, contextual conversation
+
+
 # File Tree: TASK-4-AI-Powered-ChatBot
 
 
