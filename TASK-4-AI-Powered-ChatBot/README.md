@@ -1,9 +1,10 @@
 # 🤖 NexaBot — AI-Powered Chatbot
 
 # Project Overview 
+
 NexaBot is a fully functional AI-powered chatbot built for a fictional e-commerce platform called NexaShop. It demonstrates how modern businesses embed AI customer support directly into their websites.
 
-The chatbot uses a hybrid AI architecture:
+## The chatbot uses a hybrid AI architecture:
 
 Retrieval-Based Layer — 
 Instantly matches user queries to predefined commercial patterns 
@@ -23,6 +24,44 @@ Falls back to Claude (Anthropic) for any question outside predefined patterns, e
 | **Claude API (Anthropic)** | Generative AI responses | Best-in-class instruction following |
 | **Google Fonts** | Typography (Syne + DM Sans) | Professional, modern aesthetic |
 
+
+
+# Features ✨ 
+
+## AI Architecture🤖
+
+Hybrid model — retrieval-based pattern matching + generative AI fallback
+9 trained intent categories: greeting, products, pricing, orders, support, hours, returns, account, farewell
+60+ trigger keywords across all categories
+Full conversation context sent to Claude API for contextual responses
+
+## Chat UI/UX💬
+
+Floating widget button (standard industry pattern — Intercom, Zendesk, Drift)
+Animated spring-physics panel open/close
+Real-time typing indicator (three bouncing dots)
+Quick reply chips for one-click navigation
+Message timestamps
+Auto-scroll to latest message
+Keyboard shortcut: Press / to focus input
+
+## Security🔒 
+
+API key stored in sessionStorage (NOT localStorage) — clears when tab closes
+XSS protection via escapeHtml() on all user inputs
+No API key ever stored in code or sent to any server except api.anthropic.com
+
+## Responsive Design📱 
+
+Works on desktop, tablet, and mobile
+Mobile: full-width panel, adjusted positioning
+
+## Error Handling🛡️ 
+
+Invalid API key detection
+Rate limit (429) detection
+Network failure detection
+User-friendly error messages for each scenario
 
 # File Tree: TASK-4-AI-Powered-ChatBot
 
