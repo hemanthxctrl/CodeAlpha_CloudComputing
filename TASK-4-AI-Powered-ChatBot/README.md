@@ -75,21 +75,7 @@ User-friendly error messages for each scenario
 ```
 
 # Architecture Diagram
-
-
-```mermaid
-flowchart TD
-    A["User Types Message"] --> B["Pattern Matching Engine - Retrieval Based"]
-    B --> C{"Keyword Match?"}
-
-    C -->|Yes| D["Instant Response < 500ms, Free"]
-    C -->|No| E["Claude AI API - Generative AI"]
-
-    E --> F["Uses System Prompt + Full Conversation Context"]
-    F --> G["AI Generated Response"]
-
-    B --- H["Checks 60+ Keywords Across 9 Intent Categories"]
-```
+![Arc. Diagram](/TASK-4-AI-Powered-ChatBot/Downloads/architecture.png)
 
 
 # How to Run
