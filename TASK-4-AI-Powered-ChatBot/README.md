@@ -96,3 +96,35 @@ cd nexabot
 4)open index.html          # macOS
 5)start index.html         # Windows
 6)xdg-open index.html      # Linux
+
+## Method 3: VS Code Live Server
+
+Install the Live Server extension in VS Code
+Right-click index.html → Open with Live Server
+
+## To Get Your API Key
+
+Visit console.anthropic.com
+Sign up / Log in
+Go to API Keys → Create Key
+Copy the key (starts with sk-ant-)
+Paste it into the chatbot when prompted
+
+
+💡 Don't have an API key? Use Demo Mode to test all predefined responses without any key.
+
+| 🧪 User Input                                         | Expected Response Type       | Category       |
+| ----------------------------------------------------- | ---------------------------- | -------------- |
+| "hello"                                               | Predefined (instant)         | Greeting       |
+| "what products do you sell?"                          | Predefined (instant)         | Products       |
+| "how much does it cost?"                              | Predefined (instant)         | Pricing        |
+| "where is my order?"                                  | Predefined (instant)         | Order Tracking |
+| "I have a bug"                                        | Predefined (instant)         | Support        |
+| "what are your hours?"                                | Predefined (instant)         | Business Hours |
+| "I want a refund"                                     | Predefined (instant)         | Returns        |
+| "I forgot my password"                                | Predefined (instant)         | Account        |
+| "what's the difference between NexaPro and NexaWear?" | Claude AI (generative)       | Complex Query  |
+| "can you recommend a product for a small apartment?"  | Claude AI (generative)       | Complex Query  |
+| Any off-topic question                                | Claude AI redirects politely | Guardrails     |
+
+
