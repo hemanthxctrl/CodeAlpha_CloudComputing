@@ -113,6 +113,8 @@ Paste it into the chatbot when prompted
 
 💡 Don't have an API key? Use Demo Mode to test all predefined responses without any key.
 
+# Test Cases
+
 | 🧪 User Input                                         | Expected Response Type       | Category       |
 | ----------------------------------------------------- | ---------------------------- | -------------- |
 | "hello"                                               | Predefined (instant)         | Greeting       |
