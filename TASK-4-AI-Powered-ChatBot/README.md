@@ -99,7 +99,7 @@ User-friendly error messages for each scenario
 ```
 
 # Architecture Diagram
-![Arc. Diagram](/TASK-4-AI-Powered-ChatBot/Downloads/wallpapers/architecture.pngREADME.md)
+![Arc. Diagram](/TASK-4-AI-Powered-ChatBot/NexaBot/Docs/screenshots/architecture.png)
 
 
 # How to Run
