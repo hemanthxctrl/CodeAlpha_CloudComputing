@@ -28,40 +28,55 @@ Falls back to Claude (Anthropic) for any question outside predefined patterns, e
 
 # Features ✨ 
 
-## AI Architecture🤖
+## AI Architecture🤖 
 
-Hybrid model — retrieval-based pattern matching + generative AI fallback
-9 trained intent categories: greeting, products, pricing, orders, support, hours, returns, account, farewell
-60+ trigger keywords across all categories
-Full conversation context sent to Claude API for contextual responses
+Hybrid chatbot: pattern matching + AI fallback
 
-## Chat UI/UX💬
+9 intent categories (greeting, products, pricing, orders, support, hours, returns, account, farewell)
 
-Floating widget button (standard industry pattern — Intercom, Zendesk, Drift)
-Animated spring-physics panel open/close
-Real-time typing indicator (three bouncing dots)
-Quick reply chips for one-click navigation
-Message timestamps
-Auto-scroll to latest message
-Keyboard shortcut: Press / to focus input
+60+ trigger keywords for query detection
+
+Chat context sent to Claude API for smart responses
+
+## Chat UI/UX💬 
+
+Floating chat widget (industry standard design)
+
+Smooth animated chat panel
+
+Typing indicator animation
+
+Quick reply buttons
+
+Message timestamps & auto-scroll
+
+/ shortcut to focus input
 
 ## Security🔒 
 
-API key stored in sessionStorage (NOT localStorage) — clears when tab closes
-XSS protection via escapeHtml() on all user inputs
-No API key ever stored in code or sent to any server except api.anthropic.com
+API key stored in sessionStorage (clears after tab closes)
+
+XSS protection using escapeHtml()
+
+API key only sent to api.anthropic.com
 
 ## Responsive Design📱 
 
 Works on desktop, tablet, and mobile
+
 Mobile: full-width panel, adjusted positioning
 
 ## Error Handling🛡️ 
 
 Invalid API key detection
+
 Rate limit (429) detection
+
 Network failure detection
+
 User-friendly error messages for each scenario
+
+
 
 # File Tree: TASK-4-AI-Powered-ChatBot
 
