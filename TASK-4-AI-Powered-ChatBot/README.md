@@ -6,6 +6,28 @@ NexaBot is a fully functional AI-powered chatbot built for a fictional e-commerc
 
 It demonstrates how modern businesses embed AI customer support directly into their websites.
 
+## 🖼️ Screenshots
+
+<div align="center">
+
+### 🧠 Nexabot (Banner)
+![Banner](/TASK-4-AI-Powered-ChatBot/NexaBot/Docs/screenshots/banner.png)
+
+### 🌐 Website Homepage
+![Website](/TASK-4-AI-Powered-ChatBot/NexaBot/Docs/screenshots/website.png)
+
+### 💬 Chatbot Open
+![Chat Open](/TASK-4-AI-Powered-ChatBot/NexaBot/Docs/screenshots/chat-open.png)
+
+### ⚡ Pattern Match Response (Instant)
+![Pattern Response](/TASK-4-AI-Powered-ChatBot/NexaBot/Docs/screenshots/pattern-response.png)
+
+
+### 📱 Mobile View
+![Mobile](/TASK-4-AI-Powered-ChatBot/NexaBot/Docs/screenshots/mobile.jpeg)
+
+</div>
+
 ## The chatbot uses a hybrid AI architecture:
 
 Retrieval-Based Layer — 
