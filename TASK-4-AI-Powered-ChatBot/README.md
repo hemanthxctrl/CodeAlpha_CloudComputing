@@ -2,7 +2,9 @@
 
 # Project Overview 
 
-NexaBot is a fully functional AI-powered chatbot built for a fictional e-commerce platform called NexaShop. It demonstrates how modern businesses embed AI customer support directly into their websites.
+NexaBot is a fully functional AI-powered chatbot built for a fictional e-commerce platform called NexaShop. 
+
+It demonstrates how modern businesses embed AI customer support directly into their websites.
 
 ## The chatbot uses a hybrid AI architecture:
 
@@ -72,3 +74,47 @@ User-friendly error messages for each scenario
 └── 📝 README.md
 ```
 
+# Architecture Diagram
+
+
+User Types Message
+        │
+        ▼
+┌───────────────────────────┐
+│   Pattern Matching Engine │  ← Checks 60+ keywords
+│   (Retrieval-Based)       │     across 9 categories
+└─────────────┬─────────────┘
+              │
+     Match? ──┤
+              │
+    YES ──────┤         NO
+    │         └──────────────────────┐
+    ▼                                ▼
+Instant Response            ┌────────────────────┐
+(< 500ms, free)             │   Claude AI API    │
+                            │   (Generative)     │
+                            │   With system      │
+                            │   prompt + full    │
+                            │   conversation     │
+                            │   history          │
+                            └────────────────────┘
+
+
+# How to Run
+
+## Method  1: GitHub Pages (Recommended for submission)
+
+Push this repo to GitHub
+Go to Settings → Pages → Source: main branch
+Your chatbot will be live at https://yourusername.github.io/nexabot/
+
+## Method 2: Run Locally
+
+1)first Clone the repository
+git clone https://github.com/YOUR_USERNAME/nexabot.git
+2)Navigate into the folder
+cd nexabot
+3)Open in browser (no server needed — pure HTML/CSS/JS)
+4)open index.html          # macOS
+5)start index.html         # Windows
+6)xdg-open index.html      # Linux
