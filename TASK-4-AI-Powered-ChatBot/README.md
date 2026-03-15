@@ -13,8 +13,15 @@ Generative AI Layer —
 Falls back to Claude (Anthropic) for any question outside predefined patterns, enabling truly intelligent, contextual conversation
 
 
-🛠️ Tech Stack
-TechnologyPurposeWhy ChosenHTML5Page structureSemantic, accessible markupCSS3Styling & animationsVariables, flexbox, keyframesVanilla JavaScriptChatbot logicNo framework overhead, fast loadingClaude API (Anthropic)Generative AI responsesBest-in-class instruction followingGoogle FontsTypography (Syne + DM Sans)Professional, modern aesthetic
+## 🛠️ Tech Stack
+
+| Technology | Purpose | Why Chosen |
+|---|---|---|
+| **HTML5** | Page structure | Semantic, accessible markup |
+| **CSS3** | Styling & animations | Variables, flexbox, keyframes |
+| **Vanilla JavaScript** | Chatbot logic | No framework overhead, fast loading |
+| **Claude API (Anthropic)** | Generative AI responses | Best-in-class instruction following |
+| **Google Fonts** | Typography (Syne + DM Sans) | Professional, modern aesthetic |
 
 
 # File Tree: TASK-4-AI-Powered-ChatBot
