@@ -77,27 +77,20 @@ User-friendly error messages for each scenario
 # Architecture Diagram
 
 
-User Types Message
-        │
-        ▼
-┌───────────────────────────┐
-│   Pattern Matching Engine │  ← Checks 60+ keywords
-│   (Retrieval-Based)       │     across 9 categories
-└─────────────┬─────────────┘
-              │
-     Match? ──┤
-              │
-    YES ──────┤         NO
-    │         └──────────────────────┐
-    ▼                                ▼
-Instant Response            ┌────────────────────┐
-(< 500ms, free)             │   Claude AI API    │
-                            │   (Generative)     │
-                            │   With system      │
-                            │   prompt + full    │
-                            │   conversation     │
-                            │   history          │
-                            └────────────────────┘
+```mermaid
+flowchart TD
+    A[User Types Message] --> B[Pattern Matching Engine<br/>(Retrieval-Based)]
+    B --> C{Keyword Match?}
+
+    C -->|Yes| D[Instant Response<br/>(<500ms, Free)]
+    C -->|No| E[Claude AI API<br/>(Generative AI)]
+
+    E --> F[Uses System Prompt<br/>+ Full Conversation Context]
+    F --> G[AI Generated Response]
+
+    B --- H[Checks 60+ Keywords<br/>Across 9 Intent Categories]
+```
+
 
 
 # How to Run
