@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Passes — Bus Pass System</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; min-height: 100vh; }
+  nav { background: #0f3460; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; }
+  nav .brand { color: #fff; font-size: 18px; font-weight: 700; }
+  nav a { color: #ccd6f6; text-decoration: none; font-size: 14px; }
+  .container { max-width: 860px; margin: 36px auto; padding: 0 20px; }
+  h2 { font-size: 22px; color: #1a1a2e; margin-bottom: 24px; }
+  .pass-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
+  .pass-card { background: #fff; border-radius: 14px; padding: 24px; box-shadow: 0 3px 14px rgba(0,0,0,0.08); display: flex; gap: 20px; align-items: flex-start; }
+  .qr-img { width: 100px; height: 100px; border-radius: 8px; border: 1px solid #eee; object-fit: cover; flex-shrink: 0; }
+  .pass-info h3 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .pass-info p { font-size: 13px; color: #555; margin-bottom: 4px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+  .badge.active { background: #d4edda; color: #155724; }
+  .badge.expired { background: #f8d7da; color: #721c24; }
+  .empty { text-align: center; padding: 60px 20px; color: #888; }
+  .empty a { color: #0f3460; font-weight: 600; text-decoration: none; }
+  .loading { text-align: center; padding: 40px; color: #888; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">🚌 Bus Pass System</div>
+  <a href="/dashboard">← Dashboard</a>
+</nav>
+<div class="container">
+  <h2>📋 My Passes</h2>
+  <div id="pass-container" class="loading">Loading your passes...</div>
+</div>
+<script>
+const token = localStorage.getItem('token');
+if (!token) window.location.href = '/';
+async function loadPasses() {
+  try {
+    const res = await fetch('/api/booking/my-passes', { headers: {'Authorization': 'Bearer ' + token} });
+    const data = await res.json();
+    const container = document.getElementById('pass-container');
+    if (!res.ok || !data.passes.length) {
+      container.innerHTML = '<div class="empty"><p style="font-size:36px">🎫</p><p style="margin-top:12px;">No passes booked yet.</p><br><a href="/book">Book your first pass →</a></div>';
+      return;
+    }
+    const today = new Date().toISOString().split('T')[0];
+    container.className = 'pass-grid';
+    container.innerHTML = data.passes.map(p => {
+      const isActive = p.expiry_date >= today && p.is_active;
+      return `<div class="pass-card">
+        <img class="qr-img" src="/static/images/qr_codes/${p.qr_code}" alt="QR Code" onerror="this.src='https://via.placeholder.com/100?text=QR'">
+        <div class="pass-info">
+          <h3>Pass #${p.pass_id}</h3>
+          <p>👤 ${p.passenger_name}</p>
+          <p>🚌 ${p.route}</p>
+          <p>🗓 Type: <strong>${p.pass_type.charAt(0).toUpperCase() + p.pass_type.slice(1)}</strong></p>
+          <p>💰 ₹${p.price}</p>
+          <p>📅 Booked: ${p.booked_at}</p>
+          <p>⏰ Expires: ${p.expiry_date}</p>
+          <span class="badge ${isActive ? 'active' : 'expired'}">${isActive ? '✅ Active' : '❌ Expired'}</span>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { document.getElementById('pass-container').innerHTML = '<div class="empty">Error loading passes. Please refresh.</div>'; }
+}
+loadPasses();
+</script>
+</body>
+</html>
