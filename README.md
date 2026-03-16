@@ -18,10 +18,20 @@ This project demonstrates how to build a **secure cloud-based system** that prot
 - The system can be deployed on the **cloud and accessed over the internet** with minimal system requirements.
 
 ### Technologies Used
-- Python / Flask
-- MySQL / SQL Database
-- AES-256 Encryption
-- Cloud Deployment
+
+| Technology | Purpose |
+|------------|---------|
+| Python / Flask | Backend development and API handling |
+| MySQL / SQL Database | Storing application data securely |
+| AES-256 Encryption | Protecting sensitive data using strong encryption |
+| Cloud Deployment | Hosting the application on cloud infrastructure |
+
+| Technology | Purpose |
+|------------|---------|
+| Python / Flask | Backend development and API handling |
+| MySQL / SQL Database | Storing application data securely |
+| AES-256 Encryption | Protecting sensitive data using strong encryption |
+| Cloud Deployment | Hosting the application on cloud infrastructure |
 
 ### Objective
 The goal of this project is to demonstrate **secure database practices and cloud-based protection techniques** to prevent SQL injection attacks.
@@ -41,10 +51,18 @@ This project focuses on developing an **AI-powered chatbot** that can respond to
 - Optimized and tested for **accuracy and user engagement**.
 
 ### Technologies Used
-- Python
-- Natural Language Processing (NLP)
-- HTML / CSS / JavaScript
-- AI Chatbot Frameworks
+
+| Technology | Purpose |
+|-----------|---------|
+| Python | Core programming language |
+| Natural Language Processing (NLP) | Understanding and processing user queries |
+| Chatbot Frameworks | Building conversational AI models |
+| HTML | Webpage structure for chatbot interface |
+| CSS | Styling the chatbot UI |
+| JavaScript | Handling chatbot interactions |
+| Machine Learning Libraries | Training and improving chatbot responses |
+| Git | Version control |
+| GitHub | Repository hosting and collaboration |
 
 ### Objective
 The aim of this project is to create an **interactive chatbot system** that enhances user experience by providing **quick automated support on websites**.
@@ -80,16 +98,17 @@ Easy integration with cloud services for deployment
 
 ### Technologies Used
 
-Python (Flask) – Backend development
-
-MongoDB – Database for storing user and booking data
-
-HTML / CSS / JavaScript – Frontend user interface
-
-AWS Cloud Services – Hosting and scalability
-
-Git & GitHub – Version control and project management
-
+| Technology | Purpose |
+|-----------|---------|
+| Python (Flask) | Backend development and API creation |
+| MongoDB | Database for storing user and booking data |
+| HTML | Structure of the web interface |
+| CSS | Styling and layout of the website |
+| JavaScript | Client-side interactivity |
+| AWS EC2 | Cloud hosting and scalable infrastructure |
+| QR Code Libraries (qrcode, Pillow) | Generating digital pass QR codes |
+| Git | Version control system |
+| GitHub | Repository hosting and collaboration |
 
 ### Objective
 
