@@ -76,19 +76,19 @@ The system is hosted on the cloud infrastructure to ensure high availability, sc
 
 ### Features
 
-Online bus pass booking system
+- Online bus pass booking system
 
-Secure user authentication and pass management
+- Secure user authentication and pass management
 
-Prevents ticket loss and theft through digital pass storage
+- Digital passes to prevent ticket loss or theft
 
-Dynamic pricing validation to avoid incorrect ticket pricing
+- Automatic pricing validation
 
-Designed to handle high traffic using cloud infrastructure
+--Scalable cloud infrastructure for high traffic
 
-Provides reliable and scalable booking services
+- Reliable and easy cloud deployment
 
-Easy integration with cloud services for deployment
+
 
 
 ### Technologies Used
@@ -107,8 +107,7 @@ Easy integration with cloud services for deployment
 
 ### Objective
 
-The objective of this project is to build a scalable and reliable cloud-based bus pass system that improves traditional ticket booking systems.
-By leveraging cloud computing, the system ensures high performance, security, and accessibility, allowing users to easily book and manage their bus passes online.
+To develop a scalable cloud-based bus pass system that enables users to easily book and manage bus passes online while ensuring security, reliability, and high performance using cloud computing.
 
 
 ## Author
