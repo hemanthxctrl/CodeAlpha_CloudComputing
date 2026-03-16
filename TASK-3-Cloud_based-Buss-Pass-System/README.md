@@ -47,10 +47,10 @@ LayerTechnologyBackendPython 3.11, Flask 3.0FrontendHTML5, CSS3, JavaScript (Van
 ├── 📁 Cloud-Buss-Pass
 │   └── 📁 app
 │       ├── 📁 models
-│       │   ├── 🐍 booking.py
-│       │   └── 🐍 user.py
+│       │   ├── 🐍 booking.py          # Booking logic + QR generation
+│       │   └── 🐍 user.py             # User CRUD + password hashing
 │       ├── 📁 routes
-│       │   └── 🐍 auth.py
+│       │   └── 🐍 auth.py             # /api/auth/register, /api/auth/login
 │       ├── 📁 static
 │       │   └── 📁 images
 │       │       └── 📁 qr_codes
@@ -60,8 +60,8 @@ LayerTechnologyBackendPython 3.11, Flask 3.0FrontendHTML5, CSS3, JavaScript (Van
 │       │   ├── 🌐 login.html
 │       │   ├── 🌐 register.html
 │       │   └── 🌐 view_pass.html
-│       ├── 🐍 __init__.py
-│       └── 🐍 config.py
+│       ├── 🐍 __init__.py              # App factory, DB init, blueprints
+│       └── 🐍 config.py                # Configuration (env vars)
 ├── 📝 README.md
 ├── 📄 requirements.txt
 └── 🐍 run.py
