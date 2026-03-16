@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bus Pass System — Login</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .card { background: #fff; border-radius: 16px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .logo { text-align: center; margin-bottom: 28px; }
+  .logo h1 { font-size: 22px; color: #1a1a2e; font-weight: 700; }
+  .logo p { color: #666; font-size: 14px; margin-top: 4px; }
+  .bus-icon { font-size: 40px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; margin-top: 16px; }
+  input { width: 100%; padding: 12px 14px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; transition: border 0.2s; outline: none; }
+  input:focus { border-color: #0f3460; }
+  .btn { width: 100%; padding: 13px; background: #0f3460; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 22px; transition: background 0.2s; }
+  .btn:hover { background: #16213e; }
+  .link-text { text-align: center; margin-top: 18px; font-size: 13px; color: #666; }
+  .link-text a { color: #0f3460; font-weight: 600; text-decoration: none; }
+  .error { background: #fff0f0; color: #c0392b; border: 1px solid #f5c6cb; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+  .success { background: #f0fff4; color: #27ae60; border: 1px solid #c3e6cb; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="bus-icon">🚌</div>
+    <h1>Bus Pass System</h1>
+    <p>Sign in to your account</p>
+  </div>
+  <div id="error-msg" class="error"></div>
+  <div id="success-msg" class="success"></div>
+  <label>Email Address</label>
+  <input type="email" id="email" placeholder="you@example.com">
+  <label>Password</label>
+  <input type="password" id="password" placeholder="Enter your password">
+  <button class="btn" onclick="login()">Sign In</button>
+  <div class="link-text">Don't have an account? <a href="/register">Register here</a></div>
+</div>
+<script>
+async function login() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errDiv = document.getElementById('error-msg');
+  const sucDiv = document.getElementById('success-msg');
+  errDiv.style.display = 'none'; sucDiv.style.display = 'none';
+  if (!email || !password) { errDiv.textContent = 'Please fill in all fields.'; errDiv.style.display = 'block'; return; }
+  try {
+    const res = await fetch('/api/auth/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email, password}) });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('name', data.name);
+      sucDiv.textContent = 'Login successful! Redirecting...';
+      sucDiv.style.display = 'block';
+      setTimeout(() => window.location.href = '/dashboard', 1000);
+    } else { errDiv.textContent = data.error; errDiv.style.display = 'block'; }
+  } catch(e) { errDiv.textContent = 'Server error. Please try again.'; errDiv.style.display = 'block'; }
+}
+document.addEventListener('keydown', e => { if(e.key === 'Enter') login(); });
+</script>
+</body>
+</html>
