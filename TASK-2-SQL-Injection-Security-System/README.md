@@ -318,9 +318,7 @@ http://YOUR_EC2_PUBLIC_IP:5000
 # Developed by:
 
 - Hemanth Sreenivas
-- CodeAlpha Virtual Internship
-- Cloud Computing
-- Task 2 — Detecting Data Leaks Using SQL Injection
+- GitHub: @hemanthxctrl
 
 ---
 
