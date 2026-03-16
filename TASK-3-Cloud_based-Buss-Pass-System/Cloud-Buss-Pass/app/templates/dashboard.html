@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Bus Pass System</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; min-height: 100vh; }
+  nav { background: #0f3460; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; }
+  nav .brand { color: #fff; font-size: 18px; font-weight: 700; }
+  nav .user { color: #ccd6f6; font-size: 14px; display: flex; align-items: center; gap: 16px; }
+  nav button { background: transparent; border: 1px solid #ccd6f6; color: #ccd6f6; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+  nav button:hover { background: #fff; color: #0f3460; }
+  .container { max-width: 900px; margin: 36px auto; padding: 0 20px; }
+  h2 { font-size: 22px; color: #1a1a2e; margin-bottom: 24px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 36px; }
+  .stat-card { background: #fff; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .stat-card .icon { font-size: 32px; margin-bottom: 10px; }
+  .stat-card .num { font-size: 28px; font-weight: 700; color: #0f3460; }
+  .stat-card .label { font-size: 13px; color: #888; margin-top: 4px; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .action-btn { background: #fff; border: 2px solid #e0e6f0; border-radius: 12px; padding: 28px; text-align: center; text-decoration: none; color: #1a1a2e; transition: all 0.2s; cursor: pointer; display: block; }
+  .action-btn:hover { border-color: #0f3460; background: #f0f4ff; transform: translateY(-2px); }
+  .action-btn .icon { font-size: 36px; margin-bottom: 12px; }
+  .action-btn h3 { font-size: 16px; font-weight: 700; }
+  .action-btn p { font-size: 13px; color: #888; margin-top: 4px; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">🚌 Bus Pass System</div>
+  <div class="user">
+    <span id="welcome-msg">Welcome!</span>
+    <button onclick="logout()">Logout</button>
+  </div>
+</nav>
+<div class="container">
+  <h2>Dashboard</h2>
+  <div class="cards">
+    <div class="stat-card"><div class="icon">🎫</div><div class="num" id="total-passes">0</div><div class="label">Total Passes</div></div>
+    <div class="stat-card"><div class="icon">✅</div><div class="num" id="active-passes">0</div><div class="label">Active Passes</div></div>
+    <div class="stat-card"><div class="icon">🚌</div><div class="num">4</div><div class="label">Routes Available</div></div>
+    <div class="stat-card"><div class="icon">💰</div><div class="num">₹30</div><div class="label">From (Daily Pass)</div></div>
+  </div>
+  <div class="actions">
+    <a class="action-btn" href="/book">
+      <div class="icon">➕</div>
+      <h3>Book New Pass</h3>
+      <p>Daily, Weekly, Monthly or Yearly</p>
+    </a>
+    <a class="action-btn" href="/view-pass">
+      <div class="icon">📋</div>
+      <h3>View My Passes</h3>
+      <p>See all booked passes and QR codes</p>
+    </a>
+  </div>
+</div>
+<script>
+const token = localStorage.getItem('token');
+const name = localStorage.getItem('name');
+if (!token) window.location.href = '/';
+document.getElementById('welcome-msg').textContent = 'Welcome, ' + (name || 'User') + '!';
+async function loadStats() {
+  try {
+    const res = await fetch('/api/booking/my-passes', { headers: {'Authorization': 'Bearer ' + token} });
+    const data = await res.json();
+    if (res.ok) {
+      const passes = data.passes;
+      document.getElementById('total-passes').textContent = passes.length;
+      const today = new Date().toISOString().split('T')[0];
+      const active = passes.filter(p => p.expiry_date >= today && p.is_active).length;
+      document.getElementById('active-passes').textContent = active;
+    }
+  } catch(e) {}
+}
+function logout() { localStorage.clear(); window.location.href = '/'; }
+loadStats();
+</script>
+</body>
+</html>
