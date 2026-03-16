@@ -157,9 +157,7 @@ Paste it into the chatbot when prompted
 # Developed by:
 
 - Hemanth Sreenivas
-- CodeAlpha Virtual Internship
-- Cloud Computing
-- Task-4-AI-Powered-ChatBot
+- GitHub: @hemanthxctrl
 
 ---
 
