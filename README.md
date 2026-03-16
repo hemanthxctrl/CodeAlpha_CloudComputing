@@ -84,7 +84,7 @@ The system is hosted on the cloud infrastructure to ensure high availability, sc
 
 - Automatic pricing validation
 
---Scalable cloud infrastructure for high traffic
+- Scalable cloud infrastructure for high traffic
 
 - Reliable and easy cloud deployment
 
