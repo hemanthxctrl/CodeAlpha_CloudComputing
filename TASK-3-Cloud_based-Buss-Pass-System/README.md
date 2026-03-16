@@ -159,10 +159,15 @@ http://localhost:5000
 
 
 Method	Endpoint	Description	Auth
+
 POST	/api/auth/register	Register new user	❌
+
 POST	/api/auth/login	Login user	❌
+
 POST	/api/booking/book	Book a pass	✅
+
 GET	/api/booking/my-passes	Get user passes	✅
+
 GET	/api/booking/prices	Get pass pricing	❌
 
 
