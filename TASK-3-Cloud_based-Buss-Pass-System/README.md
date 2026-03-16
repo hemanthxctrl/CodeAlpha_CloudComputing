@@ -110,9 +110,9 @@ A fully cloud-hosted online bus ticket and pass booking system built with Python
 │       ├── 🐍 __init__.py              # App factory, DB init, blueprints
 │       └── 🐍 config.py                # Configuration (env vars)
 |
-├── 📝 README.md
+├── 🐍 run.py                           # App entry point
 ├── 📄 requirements.txt
-└── 🐍 run.py                           # App entry point
+└── 📝 README.md
 ``` 
 
 
