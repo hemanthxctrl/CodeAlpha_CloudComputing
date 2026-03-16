@@ -26,12 +26,7 @@ This project demonstrates how to build a **secure cloud-based system** that prot
 | AES-256 Encryption | Protecting sensitive data using strong encryption |
 | Cloud Deployment | Hosting the application on cloud infrastructure |
 
-| Technology | Purpose |
-|------------|---------|
-| Python / Flask | Backend development and API handling |
-| MySQL / SQL Database | Storing application data securely |
-| AES-256 Encryption | Protecting sensitive data using strong encryption |
-| Cloud Deployment | Hosting the application on cloud infrastructure |
+
 
 ### Objective
 The goal of this project is to demonstrate **secure database practices and cloud-based protection techniques** to prevent SQL injection attacks.
