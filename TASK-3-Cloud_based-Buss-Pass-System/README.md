@@ -7,38 +7,81 @@ A fully cloud-hosted online bus ticket and pass booking system built with Python
 # Features📸 
 
 🔐 Secure Authentication — JWT-based login/register with bcrypt password hashing
+
 🎫 Pass Booking — Daily, Weekly, Monthly, Yearly passes with instant pricing
+
 📱 QR Code Generation — Every pass gets a unique scannable QR code
+
 📋 Pass Management — View all passes with active/expired status
+
 ☁️ Cloud Hosted — Deployed on AWS EC2 with Auto Scaling for high traffic
+
 🛡️ Security — Input validation, JWT protection, AWS Security Groups
 
 
- # Architecture
- Users (Browser)
-      │
-      ▼ HTTPS
-AWS EC2 — Flask App (Python)
-  ├── Auth Module  (JWT + bcrypt)
-  ├── Booking API  (Pass + QR Code)
-  ├── Validation   (Pricing + Routes)
-      │
-      ▼ PyMongo
-MongoDB Database
-  ├── users
-  ├── bookings
-  ├── routes
-      │
-      ▼
-AWS Services
-  ├── EC2 Auto Scaling
-  ├── S3 (Static Assets)
-  └── Security Groups / IAM
+ # System Architecture
 
 
-# Tech Stack🛠️ 
+```
+                +------------------+
+                |      Users       |
+                |     (Browser)    |
+                +---------+--------+
+                          |
+                          | HTTPS Requests
+                          ▼
+                +----------------------+
+                |      AWS EC2         |
+                |   Flask Application  |
+                +----------+-----------+
+                           |
+        +------------------+------------------+
+        |                  |                  |
+        ▼                  ▼                  ▼
++---------------+   +---------------+   +---------------+
+| Auth Module   |   | Booking API   |   | Validation    |
+| JWT + bcrypt  |   | Pass + QRCode |   | Routes/Pricing|
++---------------+   +---------------+   +---------------+
+                           |
+                           ▼
+                   +---------------+
+                   |    PyMongo    |
+                   +-------+-------+
+                           |
+                           ▼
+                   +---------------+
+                   |   MongoDB     |
+                   +---------------+
+                   | users         |
+                   | bookings      |
+                   | routes        |
+                   +---------------+
+                           |
+                           ▼
+                   +---------------+
+                   |  AWS Services |
+                   +---------------+
+                   | EC2 AutoScale |
+                   | S3 Storage    |
+                   | IAM / SG      |
+                   +---------------+
+```
 
-LayerTechnologyBackendPython 3.11, Flask 3.0FrontendHTML5, CSS3, JavaScript (Vanilla)DatabaseMongoDB 7.xAuthenticationFlask-JWT-Extended, bcryptQR Codesqrcode + PillowCloudAWS EC2 (t2.micro), S3Version ControlGit + GitHub
+
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|------|-------------|
+| **Backend** | Python 3.11, Flask 3.0 |
+| **Frontend** | HTML5, CSS3, JavaScript (Vanilla) |
+| **Database** | MongoDB 7.x |
+| **Authentication** | Flask-JWT-Extended, bcrypt |
+| **QR Code Generation** | qrcode + Pillow |
+| **Cloud Infrastructure** | AWS EC2 (t2.micro), AWS S3 |
+| **Version Control** | Git + GitHub |
+
+
 
 # Project Structure📁 
 
@@ -49,11 +92,15 @@ LayerTechnologyBackendPython 3.11, Flask 3.0FrontendHTML5, CSS3, JavaScript (Van
 │       ├── 📁 models
 │       │   ├── 🐍 booking.py          # Booking logic + QR generation
 │       │   └── 🐍 user.py             # User CRUD + password hashing
+|       |
 │       ├── 📁 routes
 │       │   └── 🐍 auth.py             # /api/auth/register, /api/auth/login
+|       |   └── 🐍 bookings.py         # /api/booking/book, /api/booking/my-passes
+|       |
 │       ├── 📁 static
 │       │   └── 📁 images
-│       │       └── 📁 qr_codes
+│       │       └── 📁 qr_codes        # Generated QR code images
+|       |
 │       ├── 📁 templates
 │       │   ├── 🌐 book_pass.html
 │       │   ├── 🌐 dashboard.html
@@ -62,10 +109,11 @@ LayerTechnologyBackendPython 3.11, Flask 3.0FrontendHTML5, CSS3, JavaScript (Van
 │       │   └── 🌐 view_pass.html
 │       ├── 🐍 __init__.py              # App factory, DB init, blueprints
 │       └── 🐍 config.py                # Configuration (env vars)
+|
 ├── 📝 README.md
 ├── 📄 requirements.txt
-└── 🐍 run.py
-```
+└── 🐍 run.py                           # App entry point
+``` 
 
 
 # Developed by:
