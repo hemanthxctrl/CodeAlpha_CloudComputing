@@ -51,6 +51,52 @@ The aim of this project is to create an **interactive chatbot system** that enha
 
 ---
 
+
+## TASK-3-Cloud_Based-Buss-Pass_System
+
+
+### Project Overview
+
+This project focuses on developing a Cloud-Based Bus Pass Booking System that allows users to book and manage bus passes online.
+The system is hosted on the cloud infrastructure to ensure high availability, scalability, and security. It helps prevent ticket loss, theft, and incorrect pricing while providing a seamless booking experience for users.
+
+
+### Features
+
+Online bus pass booking system
+
+Secure user authentication and pass management
+
+Prevents ticket loss and theft through digital pass storage
+
+Dynamic pricing validation to avoid incorrect ticket pricing
+
+Designed to handle high traffic using cloud infrastructure
+
+Provides reliable and scalable booking services
+
+Easy integration with cloud services for deployment
+
+
+### Technologies Used
+
+Python (Flask) – Backend development
+
+MongoDB – Database for storing user and booking data
+
+HTML / CSS / JavaScript – Frontend user interface
+
+AWS Cloud Services – Hosting and scalability
+
+Git & GitHub – Version control and project management
+
+
+### Objective
+
+The objective of this project is to build a scalable and reliable cloud-based bus pass system that improves traditional ticket booking systems.
+By leveraging cloud computing, the system ensures high performance, security, and accessibility, allowing users to easily book and manage their bus passes online.
+
+
 ## Author
 **Hemanth Sreenivas**
 
