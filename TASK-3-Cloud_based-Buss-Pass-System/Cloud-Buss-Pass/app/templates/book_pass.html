@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Pass — Bus Pass System</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; min-height: 100vh; }
+  nav { background: #0f3460; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; }
+  nav .brand { color: #fff; font-size: 18px; font-weight: 700; }
+  nav a { color: #ccd6f6; text-decoration: none; font-size: 14px; }
+  nav a:hover { color: #fff; }
+  .container { max-width: 560px; margin: 40px auto; padding: 0 20px; }
+  .card { background: #fff; border-radius: 16px; padding: 36px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  h2 { font-size: 20px; color: #1a1a2e; margin-bottom: 24px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; margin-top: 16px; }
+  input, select { width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; background: #fff; }
+  input:focus, select:focus { border-color: #0f3460; }
+  .price-display { background: #f0f4ff; border: 1.5px solid #d0dbf5; border-radius: 8px; padding: 14px; margin-top: 18px; display: flex; justify-content: space-between; align-items: center; }
+  .price-display .amount { font-size: 22px; font-weight: 700; color: #0f3460; }
+  .btn { width: 100%; padding: 13px; background: #0f3460; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 22px; transition: background 0.2s; }
+  .btn:hover { background: #16213e; }
+  .error { background: #fff0f0; color: #c0392b; border: 1px solid #f5c6cb; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+  .success { background: #f0fff4; color: #27ae60; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-top: 12px; display: none; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #0f3460; text-decoration: none; font-size: 14px; font-weight: 600; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">🚌 Bus Pass System</div>
+  <a href="/dashboard">← Dashboard</a>
+</nav>
+<div class="container">
+  <a class="back-link" href="/dashboard">← Back to Dashboard</a>
+  <div class="card">
+    <h2>➕ Book a New Pass</h2>
+    <div id="error-msg" class="error"></div>
+    <div id="success-msg" class="success"></div>
+    <label>Passenger Name</label>
+    <input type="text" id="passenger-name" placeholder="Full name as on ID">
+    <label>Select Route</label>
+    <select id="route">
+      <option value="">-- Choose Route --</option>
+      <option value="Route 1: City Center - Airport">Route 1: City Center → Airport</option>
+      <option value="Route 2: Station - University">Route 2: Station → University</option>
+      <option value="Route 3: Market - IT Park">Route 3: Market → IT Park</option>
+      <option value="Route 4: Old Town - New Town">Route 4: Old Town → New Town</option>
+    </select>
+    <label>Pass Type</label>
+    <select id="pass-type" onchange="updatePrice()">
+      <option value="">-- Choose Pass Type --</option>
+      <option value="daily">Daily Pass</option>
+      <option value="weekly">Weekly Pass</option>
+      <option value="monthly">Monthly Pass</option>
+      <option value="yearly">Yearly Pass</option>
+    </select>
+    <div class="price-display">
+      <span style="font-size:14px;color:#555;">Total Amount</span>
+      <span class="amount" id="price-display">₹ —</span>
+    </div>
+    <button class="btn" onclick="bookPass()">Book Pass & Generate QR</button>
+  </div>
+</div>
+<script>
+const token = localStorage.getItem('token');
+if (!token) window.location.href = '/';
+const prices = { daily: 30, weekly: 150, monthly: 500, yearly: 5000 };
+function updatePrice() {
+  const type = document.getElementById('pass-type').value;
+  document.getElementById('price-display').textContent = type ? '₹ ' + prices[type] : '₹ —';
+}
+async function bookPass() {
+  const passenger_name = document.getElementById('passenger-name').value.trim();
+  const route = document.getElementById('route').value;
+  const pass_type = document.getElementById('pass-type').value;
+  const errDiv = document.getElementById('error-msg');
+  const sucDiv = document.getElementById('success-msg');
+  errDiv.style.display = 'none'; sucDiv.style.display = 'none';
+  if (!passenger_name || !route || !pass_type) { errDiv.textContent = 'Please fill all fields.'; errDiv.style.display = 'block'; return; }
+  try {
+    const res = await fetch('/api/booking/book', { method: 'POST', headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token}, body: JSON.stringify({passenger_name, route, pass_type}) });
+    const data = await res.json();
+    if (res.ok) {
+      sucDiv.innerHTML = `✅ Pass Booked! <strong>Pass ID: ${data.pass_id}</strong> | Expires: ${data.expiry_date} | Amount: ₹${data.price}<br><a href="/view-pass" style="color:#27ae60;font-weight:600;">View Pass & QR Code →</a>`;
+      sucDiv.style.display = 'block';
+      document.getElementById('passenger-name').value = '';
+      document.getElementById('route').value = '';
+      document.getElementById('pass-type').value = '';
+      document.getElementById('price-display').textContent = '₹ —';
+    } else { errDiv.textContent = data.error; errDiv.style.display = 'block'; }
+  } catch(e) { errDiv.textContent = 'Server error. Try again.'; errDiv.style.display = 'block'; }
+}
+</script>
+</body>
+</html>
