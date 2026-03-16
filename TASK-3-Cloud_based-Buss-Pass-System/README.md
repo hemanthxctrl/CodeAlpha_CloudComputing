@@ -278,9 +278,7 @@ SMS/Email notifications
 # Developed by:
 
 - Hemanth Sreenivas
-- CodeAlpha Virtual Internship
-- Cloud Computing
-- Task 3 —Cloud-Based Buss-Pass-System 
+- GitHub: @hemanthxctrl
 
 ---
 
