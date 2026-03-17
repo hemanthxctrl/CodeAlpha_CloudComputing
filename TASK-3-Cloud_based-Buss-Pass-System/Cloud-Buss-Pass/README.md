@@ -38,7 +38,7 @@ The system prevents ticket loss and theft using QR code–based digital passes a
 ![View Pass](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/view_pass_qr.png)
 
 ### AWS DynamoDB Tables
-![DynamoDB](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/dynamo_data.png)
+![DynamoDB](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/dynamo_db_tables.png)
 
 ### Dynamo db data
 ![Dynamo db](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/dynamo_data.png)
