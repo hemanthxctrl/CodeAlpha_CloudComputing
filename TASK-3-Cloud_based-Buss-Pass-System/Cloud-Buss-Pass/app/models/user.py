@@ -1,37 +1,44 @@
-from app import db
+from app import dynamodb
 import bcrypt
 from datetime import datetime
 
-class UserModel:
-    collection = None
+TABLE_NAME = "buspass_users"
 
-    @classmethod
-    def get_collection(cls):
-        if cls.collection is None:
-            cls.collection = db['users']
-        return cls.collection
+class UserModel:
+
+    @staticmethod
+    def get_table():
+        return dynamodb.Table(TABLE_NAME)
 
     @classmethod
     def create_user(cls, name, email, password, phone):
-        col = cls.get_collection()
-        if col.find_one({'email': email}):
-            return None, 'Email already exists'
-        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        table = cls.get_table()
+        existing = table.get_item(Key={"email": email}).get("Item")
+        if existing:
+            return None, "Email already registered"
+        hashed = bcrypt.hashpw(
+            password.encode("utf-8"), bcrypt.gensalt()
+        ).decode("utf-8")
         user = {
-            'name': name,
-            'email': email,
-            'password': hashed,
-            'phone': phone,
-            'created_at': datetime.utcnow(),
-            'is_active': True
+            "email":      email,
+            "name":       name,
+            "password":   hashed,
+            "phone":      phone,
+            "created_at": datetime.utcnow().isoformat(),
+            "is_active":  True
         }
-        result = col.insert_one(user)
-        return str(result.inserted_id), None
+        table.put_item(Item=user)
+        return email, None
 
     @classmethod
     def find_by_email(cls, email):
-        return cls.get_collection().find_one({'email': email})
+        table = cls.get_table()
+        response = table.get_item(Key={"email": email})
+        return response.get("Item")
 
-    @classmethod
-    def verify_password(cls, plain_password, hashed_password):
-        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password)
+    @staticmethod
+    def verify_password(plain_password, hashed_password):
+        return bcrypt.checkpw(
+            plain_password.encode("utf-8"),
+            hashed_password.encode("utf-8")
+        )

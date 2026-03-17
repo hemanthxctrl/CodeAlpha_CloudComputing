@@ -20,6 +20,31 @@ The system prevents ticket loss and theft using QR code–based digital passes a
 
 🛡️ Security — Input validation, JWT protection, AWS Security Groups
 
+## 📸 Screenshots
+
+### Login Page
+![Login](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/login_page.png)
+
+### Register
+![user](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/register.png)
+
+### Dashboard
+![Dashboard](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/dashboard.png)
+
+### Book Pass
+![Book Pass](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/booking_success.png)
+
+### View Pass with QR Code
+![View Pass](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/view_pass_qr.png)
+
+### AWS DynamoDB Tables
+![DynamoDB](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/dynamo_data.png)
+
+### Dynamo db data
+![Dynamo db](/TASK-3-Cloud_based-Buss-Pass-System/Cloud-Buss-Pass/app/static/images/dynamo_data.png)
+
+
+
 
  # System Architecture
 
