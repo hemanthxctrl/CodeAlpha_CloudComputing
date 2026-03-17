@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+venv/
+*.egg-info/
+.DS_Store
+app/static/images/qr_codes/
+*.log
