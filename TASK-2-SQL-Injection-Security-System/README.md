@@ -220,7 +220,7 @@ Uses parameterized queries so injection fails even if Layer 1 is bypassed.
 * ✅ AWS RDS MySQL Database
 * ✅ Deployable on AWS EC2 Free Tier
 
-# Your Deployment Order 🚀 
+#  Deployment Order 🚀 
 
 ## Deployment Order
 
